@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>vue使用之侦听器</title>
+	<meta charset="utf-8">
+	<script type="text/javascript" src="./vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<input type="text" name="myText" v-model = "msg">
+		<button @click="submit()">提交</button>
+		<ul>
+			<li v-for = "item of list">{{item}}</li>
+		</ul>
+
+		
+	</div>
+
+	<script type="text/javascript">
+		var app = new Vue({
+			el : '#app',
+			data:{
+				msg:'',
+				list:[],
+			},
+			watch:{
+				list(){
+					console.log('list中有' + this.list.length + '条数据');
+				}
+			},
+			methods:{
+				submit:function(){
+					this.list.push(this.msg);
+					this.msg = '';
+				}
+			},
+		})
+	</script>
+
+</body>
+</html>

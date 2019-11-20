@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>vue使用实例之钩子</title>
+	<meta charset="utf-8">
+	<script type="text/javascript" src="./vue.js"></script>
+</head>
+<body>
+
+	<div id="app">
+		{{count}}
+		<p>
+			<button @click="add()"> 更新数据</button>
+		</p>
+
+		<button onclick="app.$destroy()">销毁实例</button>
+	</div>
+
+	<script type="text/javascript">
+		var app = new Vue({
+			el:'#app',
+			data:{
+				count : 1,
+			},
+			methods:{ 
+				add : function(){
+					this.count++;
+				}
+			},
+
+			//数据初始化检测和事件配置
+			beforeCreate : function (){
+				console.log("1、beforeCreate");
+				console.log(this.count);
+			},
+
+			//created之后属性可用
+			created : function (){
+				console.log("2、created");
+				console.log(this.count);
+			},
+
+			//挂在Vue实例的范围和内容
+			beforeMount : function() {
+				console.log("3、brforeMount 挂载之前");
+				console.log(this.$el);
+			},
+
+			mounted : function() {
+				console.log("4、mounted  被创建");
+				console.log(this.$el);
+			},
+
+
+			//数据更新
+			beforeUpdate : function(){
+				console.log("5、beforeUpdat 数据更新前");
+			},
+
+			updated : function() {
+				console.log("6、updated 数据更新后");
+			},
+
+			//实例销毁
+			beforeDestroy : function(){
+				console.log("7、beforeDestroy 实例销毁前");
+			},
+
+			destroyed : function() {
+				console.log("8、destroyed 实例销毁后");
+			},
+
+
+		})
+
+
+	</script>
+
+</body>
+</html>

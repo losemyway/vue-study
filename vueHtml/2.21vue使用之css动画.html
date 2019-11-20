@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>vue使用之css动画</title>
+	<meta charset="utf-8">
+	<script type="text/javascript" src="./vue.js"></script>
+	<!-- <style type="text/css">
+		.fade-enter-active, .fade-leave-active{
+			transition: opacity 0.5s;
+		}
+		.fade-enter, .fade-leave-to{
+			opacity: 0;
+		}
+	</style> -->
+	<link href="https://cdn.bootcss.com/animate.css/3.7.2/animate.min.css" rel="stylesheet">
+</head>
+<body>
+	<div id="app">
+		<!-- <transition name="fade"> -->
+		<transition enter-active-class="animated jello"
+					leave-active-class="animated tada">
+			<div v-show="show">hello 我在自学</div>
+		</transition>
+
+		<button @click="change()">{{btnTitle}}</button>
+	</div>
+
+	<script type="text/javascript">
+		
+		var app = new Vue({
+			el:"#app",
+			data:{
+				btnTitle:"隐藏",
+				show:true,
+			},
+
+			methods:{
+				change:function(){
+					this.show = !this.show;
+					if (this.show) {
+						this.btnTitle="隐藏";
+					}else{
+						this.btnTitle="显示";
+					}
+				}
+			},
+		})
+
+	</script>
+</body>
+</html>

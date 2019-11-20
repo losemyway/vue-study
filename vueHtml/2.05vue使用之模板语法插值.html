@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>vue使用之模板语法 插值</title>
+	<meta charset="utf-8">
+	<script type="text/javascript" src="./vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		{{msg.split('').reverse().join('')}}
+		<div v-html = "htmlMsg"></div>
+	</div>
+	<script type="text/javascript">
+		var app = new Vue({
+			el:'#app',
+			data:{
+				msg:'hello woyaoxuexi',
+				htmlMsg:'<div>hello woyaoxuexi </div>',
+			}
+		})
+
+	</script>
+
+</body>
+</html>

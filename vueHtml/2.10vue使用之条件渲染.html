@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>vue使用之条件渲染</title>
+	<meta charset="utf-8">
+	<script type="text/javascript" src="./vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<div v-if="flag==1" key="name">
+			<p>name:</p>
+			<input type="text" name="">
+		</div>
+
+		<div v-if="flag==2" key="email">
+			<p>email:</p>
+			<input type="text" name="">
+		</div>
+
+		<div v-if="flag==3" key="password">
+			<p>password:</p>
+			<input type="text" name="">
+		</div>
+
+		<div v-show="flag==2" key="password">
+			<p>password:</p>
+			<input type="text" name="">
+		</div>
+
+		<input type="submit" name="" @click="change()">
+		
+	</div>
+
+	<script type="text/javascript">
+		var app = new Vue({
+			el:'#app',
+			data:{
+				flag:1,
+			},
+			methods:{
+				change:function(){
+					this.flag ++;
+					if (this.flag >3) {
+						this.flag = 1;
+					}
+				},
+			},
+		})
+	</script>
+
+</body>
+</html>

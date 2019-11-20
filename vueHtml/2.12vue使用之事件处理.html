@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>vue使用之事件处理</title>
+	<meta charset="utf-8">
+	<script type="text/javascript" src="./vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<input 
+		type="text" name="" 
+		@change="change()"
+		v-model="value" 
+		>
+	</div>
+
+	<script type="text/javascript">
+		var app = new Vue({
+			el:'#app',
+			data:{
+				value:'',
+			},
+			methods:{
+				change:function(e){
+					// 默认传参 e 为事件
+					console.log(e);
+					console.log(this.value);
+				}
+			},
+		})
+	</script>
+
+</body>
+</html>

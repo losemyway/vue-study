@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>vue使用之作用域插槽</title>
+	<meta charset="utf-8">
+	<script type="text/javascript" src="./vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<boy>
+			<template slot-scope="data">
+				<h1>{{data.msg}}</h1>
+			</template>
+		</boy>
+		
+	</div>
+
+	<script type="text/javascript">
+		
+		var boy = {
+			props:[],
+			template:"\
+				<div>\
+				<slot :msg=msg></slot>\
+				</div>",
+			data(){
+				return{
+					msg:"hello, 我在图书馆自学",
+				}
+			}
+		}
+
+		var app = new Vue({
+			el:"#app",
+			components:{
+				boy,
+			},
+			data:{
+
+			},
+			methods:{
+
+			},
+		})
+	</script>
+
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>vue使用之组件改造todolist</title>
+	<meta charset="utf-8">
+	<script type="text/javascript" src="./vue.js"></script>
+</head>
+<body>
+
+	<div id="app">
+		<div>
+			<input type="text" name="text" v-model="inputValue">
+			<button @click="submitValue()">提交</button>
+			<ul>
+				<todo-item v-for="item of list" :item="item"></todo-item>
+			</ul>
+		</div>
+
+		<div>
+			<input type="text" name="limit" v-model="inputLimitValue">
+			<button @click="submitLimitValue()">提交</button>
+			<ul>
+				<!-- <todo-item v-for="item of limitList" :item="item"></todo-item> -->
+				<limit-item v-for="item of limitList" :item="item"></limit-item>
+			</ul>
+		</div>
+
+	</div>
+
+	<script type="text/javascript">
+		// //全局组件
+		Vue.component("TodoItem",{
+			props:["item"],
+			template:"<li>{{item}}</li>",
+
+		})
+
+		// 局部组件
+		var LimitItem = {
+			props:["item"],
+			template:"<li>{{item}}</li>",
+		}
+
+		var app = new Vue({
+			el:'#app',
+			components:{
+				LimitItem,
+			},
+			data:{
+				inputValue:'',
+				list:[],
+
+				inputLimitValue:'',
+				limitList:[],
+			},
+			methods:{
+				submitValue:function(){
+					console.log("www");
+					this.list.push(this.inputValue);
+					this.inputValue='';
+					console.log(this.list.length);
+				},
+
+				submitLimitValue:function(){
+
+					console.log("submitLimitValue");
+					this.limitList.push(this.inputLimitValue);
+					this.inputLimitValue='';
+					console.log(this.limitList.length);
+				},
+			},
+
+		})
+	</script>
+</body>
+</html>

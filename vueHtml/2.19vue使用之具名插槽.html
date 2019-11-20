@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>vue使用之具名插槽</title>
+	<meta charset="utf-8">
+	<script type="text/javascript" src="./vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<boy>
+			<h1 slot=title>hello name 为title</h1>
+		</boy>
+		
+	</div>
+
+	<script type="text/javascript">
+		Vue.component("boy",{
+			template:"\
+			<div>\
+				<slot>\
+					<h1>默认内容</h1>\
+				</slot>\
+				hello 我在自学\
+				<slot name=title>\
+					<h1>默认内容</h1>\
+				</slot>\
+			</div>",
+		})
+
+		var app = new Vue({
+			el:"#app",
+			data:{
+
+			},
+			methods:{
+
+			},
+		})
+	</script>
+</body>
+</html>

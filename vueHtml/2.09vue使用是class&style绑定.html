@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>vue使用是class&style绑定</title>
+	<meta charset="utf-8">
+	<script type="text/javascript" src="./vue.js"></script>
+	<style type="text/css">
+		.changeColor{
+			color: red;
+		}
+		.bluecolor{
+			background-color: blue;
+		}
+	</style>
+</head>
+<body>
+	<div id="app">
+		<div v-bind:class="{changeColor:boolValue}"> hello 我在自学</div>
+		<button @click="changeColor()">change color</button>
+
+		<div v-bind:class="colorArrs"> hello 我在自学</div>
+		<button @click="addColor()">change color</button>
+
+		<div v-bind:style="{color:mycolor}"> hello 我在自学</div>
+		<button @click="changemyColor()">change color</button>
+
+		<div v-bind:style="mycolorArrs"> hello 我在自学</div>
+		<button @click="addmyColor()">change color</button>
+	</div>
+
+	<script type="text/javascript">
+		var app = new Vue({
+			el:'#app',
+			data:{
+				boolValue:false,
+				colorArrs:[],
+
+				mycolor:'blue',
+				mycolorArrs:[],
+				backcolor:{
+					color:'red',
+				}
+			},
+			methods:{
+				changeColor:function(){
+					this.boolValue = !this.boolValue;
+				},
+				addColor:function(){
+					this.colorArrs.push("bluecolor");
+					this.colorArrs.push("changeColor");
+				},
+
+				changemyColor:function(){
+					this.mycolor = 'green';
+				},
+				addmyColor:function(){
+					this.mycolorArrs.push(this.backcolor);
+					this.mycolorArrs.push({'background-color':'yellow'});
+				},
+
+			},
+		})
+	</script>
+
+</body>
+</html>

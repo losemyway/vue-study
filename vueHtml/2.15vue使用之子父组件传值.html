@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>vue使用之子父组件传值</title>
+	<meta charset="utf-8">
+	<script type="text/javascript" src="./vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<div style="float: left; margin: 10px;">
+			<h2>父组件</h2>
+			<p>子组件消息</p>
+			<ul>
+				<li v-for="item of msgList">{{item}}</li>
+			</ul>
+			<input type="text" name="" v-model="textValue" @change="changeText()">
+			<button @click.prevent="btnClick" >回复子组件</button>
+		</div>
+		<boy-component :msg="msg" ref="boyChild" @childmsg="reserveChildMsg"></boy-component style="float: left;margin: 10px;">
+
+	</div>
+
+	
+
+	<script type="text/javascript">
+		var boyComponent = {
+			props:["msg"],
+			// template:'<div>{{msg}}</div>',
+			template:'\
+			<div>\
+				<h2>子组件:</h2>\
+				<p>父组件消息:</p>\
+				<ul>\
+					<li v-for="item of msgList">{{item}}</li>\
+				</ul>\
+				<input type="text" name="" v-model="textValue" @change="changeText()">\
+				<button @click ="btnClick()" >回复父组件</button>\
+			</div>\
+			',
+			data(){
+				return {
+					msgList:[],
+					textValue:'',
+				}
+			},
+			watch:{
+				msg(){
+					console.log(this.msg);
+					this.msgList.push(this.msg);
+				}
+			},
+			methods:{
+				addMessage:function(message){
+					this.msgList.push(message);
+				},
+				btnClick:function(){
+					if (this.textValue.length<=0) {return;}
+					this.$emit('childmsg',this.textValue);
+					this.textValue='';
+				},
+
+				changeText:function(){
+					// this.$emit('childmsg',this.textValue);
+					// this.textValue='';
+				},
+			},
+		}
+
+		var app = new Vue({
+			el:'#app',
+			components:{
+				boyComponent,
+			},
+			data:{
+				msg:"hello 子组件",
+				textValue:"",
+				msgList:[],
+			},
+			methods:{
+				btnClick:function(){
+					if (this.textValue.length<=0) {return;}
+					this.$refs.boyChild.addMessage(this.textValue);
+					this.textValue = "";
+				},
+
+				changeText:function(){
+					// this.msg = this.textValue;
+					// this.textValue = "";
+				},
+
+				reserveChildMsg:function(msg){
+					console.log(msg);
+					this.msgList.push(msg);
+				}
+			},
+		})
+	</script>
+
+</body>
+</html>

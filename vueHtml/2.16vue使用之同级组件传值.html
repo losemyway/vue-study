@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>vue使用之同级组件传值</title>
+	<meta charset="utf-8">
+	<script type="text/javascript" src="./vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<boy-component :name="boy" :action="boyAction" :send="boySend"></boy-component>
+
+		<boy-component :name="girl" :action="girlAction" :send="girlSend"></boy-component>
+		<!-- <girl-component :name="girl"></girl-component> -->
+	</div>
+
+	<script type="text/javascript">
+		var bus = new Vue()
+
+		var boyComponent = {
+			props:["name","action","send"],
+			template:'\
+			<div>\
+				<h2>{{name}}:</h2>\
+				<p>组件消息:</p>\
+				<ul>\
+					<li v-for="item of msgList">{{item}}</li>\
+				</ul>\
+				<input type="text" name="" v-model="textValue">\
+				<button @click ="btnClick()" >回复</button>\
+			</div>\
+			',
+			data(){
+				return{
+					msgList:[],
+					textValue:'',
+				}
+			},
+			created:function(){
+				var me = this;
+				bus.$on(this.action,function(message){
+					me.msgList.push(message);
+				})
+			},
+			methods:{
+				addMessage:function(message){
+					this.msgList.push(message);
+				},
+				btnClick:function(){
+					bus.$emit(this.send,this.textValue);
+					this.textValue='';
+				},
+			},
+		}
+
+		var girlComponent = {
+			props:["name"],
+			template:'\
+			<div>\
+				<h2>{{name}}:</h2>\
+				<p>组件消息:</p>\
+				<ul>\
+					<li v-for="item of msgList">{{item}}</li>\
+				</ul>\
+				<input type="text" name="" v-model="textValue">\
+				<button @click ="btnClick()" >回复</button>\
+			</div>\
+			',
+			data(){
+				return{
+					msgList:[],
+					textValue:'',
+				}
+			},
+			created:function(){
+				var me = this;
+				bus.$on("boy",function(message){
+					me.msgList.push(message);
+				})
+			},
+			methods:{
+				addMessage:function(message){
+					this.msgList.push(message);
+				},
+				btnClick:function(){
+					bus.$emit("girl",this.textValue);
+					this.textValue='';
+				},
+			},
+		}
+		
+		var app = new Vue({
+			el:'#app',
+			components:{
+				boyComponent,
+				girlComponent,
+			},
+			data:{
+				boy:'boy组件',
+				girl:'girl组件',
+				boyAction:'girl',
+				girlAction:'boy',
+
+				boySend:'boy',
+				girlSend:'girl',
+			},
+			methods:{
+
+			},
+		})
+	</script>
+
+</body>
+</html>

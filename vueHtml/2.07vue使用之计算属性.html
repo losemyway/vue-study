@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>vue使用之计算属性</title>
+	<meta charset="utf-8">
+	<script type="text/javascript" src="./vue.js"></script>
+</head>
+<body>
+
+	<div id="app">
+		<p>{{msg}}</p>
+		<p>{{reverseMsg}}</p>
+		<!-- <p></p>
+		<p>{{reverseMsg}}</p>
+		<p>{{reverseMsg}}</p> -->
+
+
+		<p>{{reverseMyMsg(msg2)}}</p>
+		<!-- <p>{{reverseMyMsg(msg)}}</p>
+		<p>{{reverseMyMsg(msg)}}</p> -->
+
+		<p>{{witeMsg()}}</p>
+
+		<button @click = "changeMsg()"> 修改</button>
+	</div>
+
+	<script type="text/javascript">
+		
+		var app = new Vue({
+			el:'#app',
+			data:{
+				msg:"hello world",
+				msg2:"阿短是大笨蛋",
+			},
+			computed:{
+				reverseMsg:function(){
+					console.log('computed');
+					return this.msg.split('').reverse().join('');
+				},
+			}
+			,
+			methods:{
+				reverseMyMsg:function(ue){
+					console.log('mymethods');
+					return ue.split('').reverse().join('');
+				},
+
+				witeMsg:function(){
+					console.log("wite");
+					return this.msg2;
+				},
+				changeMsg:function(){
+					 this.msg = this.msg + 'a';
+					console.log(this.msg);
+				}
+			},
+
+		})
+
+	</script>
+</body>
+</html>

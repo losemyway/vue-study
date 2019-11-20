@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>vue使用之动态组件</title>
+	<meta charset="utf-8">
+	<script type="text/javascript" src="./vue.js"></script>
+</head>
+<body>
+
+	<div id="app">
+		<keep-alive>
+			<component :is="sex"></component>
+		</keep-alive>
+		<button @click="change()">切换</button>
+	</div>
+
+	<script type="text/javascript">
+		Vue.component("boy",{
+			template:'\
+				<div>\
+					boy:<input type="text"/>\
+				</div>\
+			'
+		})
+
+		Vue.component("girl",{
+			template:'\
+				<div>\
+					girl:<input type="text"/>\
+				</div>\
+			'
+		})
+		
+		var app = new Vue({
+			el:'#app',
+			components:{
+
+			},
+			data:{
+				sex:"boy",
+			},
+			methods:{
+				change:function(){
+					this.sex = (this.sex === "boy" ? "girl" : "boy");
+				}
+			},
+
+		})
+	</script>
+
+</body>
+</html>

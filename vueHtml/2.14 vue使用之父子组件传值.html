@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> vue使用之父子组件传值</title>
+	<meta charset="utf-8">
+	<script type="text/javascript" src="./vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<boy-component :msg="msg"></boy-component>
+		<button @click="buttonClick()"> add msg</button>
+	</div>
+
+	<script type="text/javascript">
+		var boyComponent = {
+			props:["msg"],
+			template:'<div>{{msg}}</div>',
+		}
+
+		var app = new Vue({
+			el:'#app',
+			components:{
+				boyComponent,
+			},
+			data:{
+				msg:"hello，子组件",
+			},
+			methods:{
+				buttonClick:function(){
+					this.msg +="shsh"
+				},
+			},
+		})
+
+
+	</script>
+</body>
+</html>

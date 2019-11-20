@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>vue使用之循环渲染</title>
+	<meta charset="utf-8">
+	<script type="text/javascript" src="./vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<ul>
+			<li v-for = "(item,index) of list" >
+				{{item}}>>>>{{index}}
+			</li>
+		</ul>
+
+		<ul>
+			<li v-for = "listPerson of person">
+				<ul>
+					<li v-for = "(item, index, key) of listPerson" >
+						{{index}}:{{item}} --- {{key}}
+					</li>
+				</ul>
+			</li>
+		</ul>
+		
+	</div>
+
+	<script type="text/javascript">
+		var app = new Vue({
+			el:'#app',
+			data:{
+				list:[1,2,3,4,5,6,7,8],
+
+				person:[{
+					name:'alex',
+					age:18,
+					sex:'man',	
+				},{name:'夏红',
+					age:19,
+					sex:'woman',
+				},{name:'夏红',
+					age:19,
+					sex:'woman',
+				}]
+			},
+			methods:{
+
+			},
+
+		})
+	</script>
+</body>
+</html>

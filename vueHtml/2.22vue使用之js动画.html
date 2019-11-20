@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>vue使用之js动画</title>
+	<meta charset="utf-8">
+	<script type="text/javascript" src="vue.js"></script>
+	<script src="https://cdn.bootcss.com/velocity/2.0.5/velocity.min.js"></script>
+</head>
+<body>
+	<div id="app">
+		<transition 
+			@before-enter="Before"
+			@enter="Enter"
+			@after-enter="After">
+			<h2 v-show="show">别打扰我，我在自学</h2>
+		</transition>
+
+		<button @click="change()">{{btnTitle}}</button>
+		
+	</div>
+
+	<script type="text/javascript">
+		
+		var app = new Vue({
+			el:"#app",
+			data:{
+				show:true,
+				btnTitle:"隐藏",
+			},
+			methods:{
+				change:function(){
+					this.show = !this.show;
+					if (this.show) {
+						this.btnTitle="隐藏";
+					}else{
+						this.btnTitle="显示";
+					}
+
+				},
+
+				//MARK:动画函数
+				Before:function(el){
+					el.style.opacity=0;
+				},
+
+				Enter:function(el,done){
+					console.log("ssss")
+					Velocity(
+						el,
+						{opacity:1},
+						{
+							duration:2000,
+							complete:done,
+						}
+						)
+				},
+
+				After:function(el){
+					el.style.opacity=1;
+					alert("动画完成");
+				}
+			},
+
+		})
+	</script>
+</body>
+</html>
