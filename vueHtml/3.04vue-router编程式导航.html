@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>vue-router编程式导航</title>
+	<meta charset="utf-8">
+	<script type="text/javascript" src="./vue.js"></script>
+	<script type="text/javascript" src="./vue-router.js"></script>
+</head>
+<body>
+
+	<div id="app">
+		<router-link to="/">index</router-link>
+		<router-link to="/list">list</router-link>
+		<router-link to="/list/one">one</router-link>
+		<router-link to="/list/two">two</router-link>
+
+		<button @click="change()">change</button>
+		<router-view></router-view>
+		
+	</div>
+
+	<script type="text/javascript">
+		var router =new VueRouter({
+			routes:[
+				{
+					path:"/",
+					component:{
+						template:'<div>首页<div>',
+					}
+				},
+				{
+					path:"/list",
+					component:{
+						template:'<div>列表<div>',
+					}
+				},
+				{
+					path:"/list/:item",
+					component:{
+						template:'<div>{{$route.params.item}}<div>',
+					}
+				}
+			]
+		})
+
+		var app = new Vue({
+			el:"#app",
+			router:router,
+			data:{
+
+			},
+			methods:{
+				change:function(){
+					var myRouter = this.$router;
+					setTimeout(function(){
+						this.router.push("/list/two");
+						setTimeout(function(){
+							this.router.replace("/list/one");
+							setTimeout(function(){
+								myRouter.go(-1);
+							},2000)
+						},2000)
+					},2000)
+					
+				}
+			},
+		})
+
+	</script>
+
+</body>
+</html>

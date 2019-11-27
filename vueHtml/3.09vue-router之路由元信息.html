@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>vue-router之路由元信息</title>
+	<meta charset="utf-8">
+	<script type="text/javascript" src="./vue.js"></script>
+	<script type="text/javascript" src="./vue-router.js"></script>
+</head>
+<body>
+
+	<div id="app">
+		<router-link :to="{name:'home'}">home</router-link>
+		<router-link :to="{name:'user'}">user</router-link>
+		<router-link :to="{name:'login'}">login</router-link>
+		<router-view name="home"></router-view>
+	</div>
+
+	<script type="text/javascript">
+		var login = true;
+
+		var HomePage = {
+			template:'<div>Home Page</div>'
+		}
+
+		var UserPage = {
+			template:'<div>User Page</div>'
+		}
+		var LoginPage = {
+			template:'<div>Login Page\
+			<button @click="btnClick()">{{loginName}}</button>\
+			</div>',
+			created:function(){
+				if (login) {
+					this.loginName = "登出";
+				}else{
+					this.loginName = "登录";
+				}
+			},
+			data:function(){
+				return{
+					loginName:"",
+				}
+			},
+			methods:{
+				btnClick:function(){
+					login = !login;
+					if (login) {
+						this.loginName = "登出";
+					}else{
+						this.loginName = "登录";
+					}
+				}
+			}
+
+
+		}
+
+		var router = new VueRouter({
+			routes:[
+				{
+					path:"/home",
+					name:"home",
+					components:{
+						home:HomePage,
+					}
+				},
+				{
+					path:"/user",
+					name:"user",
+					components:{
+						home:UserPage,
+					},
+					meta:{
+						flag:true,
+					}
+				},
+				{
+					path:"/login",
+					name:"login",
+					components:{
+						home:LoginPage,
+					}
+				},
+			]
+		})
+
+		router.beforeEach(function(to,from,next){
+			console.log(to.matched);
+			if (to.matched.some(function(item){
+							return item.meta.flag;
+						})) {
+				next("/login");
+				
+			}else{
+				next();
+			}
+			// if (!login && to.path === "/user") {
+			// 	next('/login');
+			// }else{
+			// 	next();
+			// }
+		})
+
+		var app = new Vue({
+			el:"#app",
+			router:router,
+			data:{
+
+			},
+			methods:{
+
+			},
+		}) 
+
+
+	</script>
+
+</body>
+</html>

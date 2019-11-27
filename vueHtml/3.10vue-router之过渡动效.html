@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>vue-router之过渡动效</title>
+	<meta charset="utf-8">
+	<script type="text/javascript" src="./vue.js"></script>
+	<script type="text/javascript" src="./vue-router.js"></script>
+	<link href="https://cdn.bootcss.com/animate.css/3.7.2/animate.min.css" rel="stylesheet">
+</head>
+<body>
+
+	<div id="app">
+		<router-link :to="{name:'home'}">home</router-link>
+		<router-link :to="{name:'list'}">list</router-link>
+		<router-link :to="{name:'login'}">login</router-link>
+		<transition :enter-active-class="effect">
+			<router-view name="home"></router-view>
+		</transition>
+	</div>
+
+
+	<script type="text/javascript">
+		var HomePage ={
+			template:'<div>home page</div>'
+		}
+
+		var ListPage ={
+			template:'<div>list page</div>'
+		}
+
+		var LoginPage ={
+			template:'<div>login page</div>'
+		}
+
+
+		var router = new VueRouter({
+			routes:[
+				{
+					path:"/",
+					redirec:"/home",
+					components:{
+						home:HomePage,
+					}
+				},
+				{
+					path:"/home",
+					name:"home",
+					components:{
+						home:HomePage,
+					}
+				},
+				{
+					path:"/list",
+					name:"list",
+					components:{
+						home:ListPage,
+					}
+				},
+				{
+					path:"/login",
+					name:"login",
+					components:{
+						home:LoginPage,
+					}
+				},
+			]
+
+		})
+
+		var app = new Vue({
+			el:"#app",
+			router:router,
+			data:{
+				effect:"",
+			},
+			methods:{
+
+			},
+			watch:{
+				'$route'(to,from){
+					var effectMap = {
+						"/home":"shake",
+						"/list":"jello",
+						"/login":"bounce",
+					}
+					this.effect = ['animate',effectMap[to.path]].join(' ')
+					console.log(this.effect)
+				}
+			}
+		})
+
+
+	</script>
+
+</body>
+</html>

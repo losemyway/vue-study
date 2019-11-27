@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>vue-router之重定向和别名</title>
+	<meta charset="utf-8">
+	<script type="text/javascript" src="./vue.js"></script>
+	<script type="text/javascript" src="./vue-router.js"></script>
+</head>
+<body>
+	<div id="app">
+		<router-link :to="{name:'home'}">home</router-link>
+		<router-link :to="{name:'list'}">list</router-link>
+		<router-link :to="{name:'listdetail'}">listdetail</router-link>
+		<router-view name='home'></router-view>
+		<router-view name='list'></router-view>
+	</div>
+
+	<script type="text/javascript">
+		var router = new VueRouter({
+			routes:[
+				{
+					path:"/",
+					name:"home",
+					components:{
+						home:{
+							template:'<div>首页</div>',
+						}
+					}
+				},
+				{
+					path:"/list",
+					name:"list",
+					redirect:"/listredirect",//重定向
+					components:{
+						list:{
+							template:'<div>列表</div>',
+						}
+					}
+				},
+				{
+					path:"/listredirect",
+					name:"listredirect",
+					components:{
+						list:{
+							template:'<div>列表重定向页</div>',
+						}
+					}
+				},
+				{
+					path:"/listdetail",
+					name:"listdetail",
+					alias:"/aliasDetail",
+					components:{
+						list:{
+							template:'<div>列表详情</div>',
+						}
+					}
+				}
+			]
+		})
+
+
+		var app = new Vue({
+			el:"#app",
+			router:router,
+			data:{
+
+			},
+			methods:{
+
+			},
+		})
+	</script>
+</body>
+</html>

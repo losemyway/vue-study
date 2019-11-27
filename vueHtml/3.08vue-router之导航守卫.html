@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>vue-router之导航守卫</title>
+	<meta charset="utf-8">
+	<script type="text/javascript" src="./vue.js"></script>
+	<script type="text/javascript" src="./vue-router.js"></script>
+</head>
+<body>
+	<div id="app">
+		<router-link to="/">HomePage</router-link>
+		<router-link to="/UserPage">UserPage</router-link>
+		<router-link :to="{name:'InfoPage'}">InfoPage</router-link>
+		<router-link :to="{name:'LoginPage'}">LoginPage</router-link>
+		<router-view name="home"></router-view>
+		<router-view name="list"></router-view>
+	</div>
+
+	<script type="text/javascript">
+
+		// Vue.component("HomePage",{
+		// 	props:["item"],
+		// 	template:'<div><div>ssss</div>{{item}}</div>',
+		// })
+
+		var login = false;
+		
+		var HomePage = {
+			props:["item"],
+			template:'<div>Home Page</div>',
+		}
+
+		var UserPage = {
+			props:["item"],
+			template:'<div>User Page</div>',
+		}
+
+		var InfoPage = {
+			props:["item"],
+			template:'<div>Info Page</div>',
+		}
+
+		var LoginPage = {
+			props:["item"],
+			template:'<div>Login Page\
+				<button @click="btnClick()">{{loginName}}</button>\
+			</div>',
+			data:function(){
+				return {
+					loginName:'',
+				}
+			},
+			created:function(){
+				if (login) {
+					this.loginName="登出";
+				}else {
+					this.loginName="登录";
+				}
+			},
+			methods:{
+				btnClick:function(){
+					login = !login;
+					if (login) {
+						this.loginName="登出";
+					}else {
+						this.loginName="登录";
+					}
+				}
+			}
+		}
+
+		var router = new VueRouter({
+			routes:[
+				{
+					path:"/",
+					name:"home",
+					redirect:"/home",
+					components:{
+						home:{
+							template:'<div>ssss</div>'
+						}
+					}
+				},
+				{
+					path:"/home",
+					name:"homePage",
+					components:{
+						home:HomePage,
+					},
+					
+				},
+				{
+					path:"/UserPage",
+					name:"UserPage",
+					components:{
+						home:UserPage,
+					},
+				},
+				{
+					path:"/InfoPage",
+					name:"InfoPage",
+					components:{
+						home:InfoPage,
+					},
+					beforeEnter(to,from,next){
+						if (!login) {
+							next("/LoginPage");
+						}else{
+							next();
+						}
+					}
+				},
+				{
+					path:"/LoginPage",
+					name:"LoginPage",
+					components:{
+						home:LoginPage,
+					},
+				},
+
+			]
+
+		})
+
+
+		//全局守卫
+		router.beforeEach(function(to,from,next){
+			if (!login && to.path==="/UserPage") {
+				next("/LoginPage");
+			}else{
+				next();
+			}
+		})
+
+		var app = new Vue({
+			el:"#app",
+			router:router,
+			data:{
+
+			},
+			methods:{
+
+			}
+		})
+
+	</script>
+
+</body>
+</html>

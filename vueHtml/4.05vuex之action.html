@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>vuex之action</title>
+	<meta charset="utf-8">
+	<script type="text/javascript" src="./vue.js"></script>
+	<script type="text/javascript" src="./vuex.js"></script>
+</head>
+<body>
+	<div id="app">
+		<count-view>
+			<div slot=title>
+				<h3>count值</h3>
+				<p>{{this.$store.state.count}}</p>
+				<h3>getter count值</h3>
+				<p>{{this.$store.getters.count}}</p>
+				<p>{{this.$store.getters.addCount(8)}}</p>
+				<p>{{count}}</p>
+				<p>{{addCount(8)}}</p>
+			</div>
+		</count-view>
+		<button @click="myAddAction()">myAdd</button>
+	</div>
+	<script type="text/javascript">
+		Vue.config.devtools = true
+		var ADD = 'ADD';
+		var store = new Vuex.Store({
+			state:{
+				count:0,
+			},
+			getters:{
+				count:state => {
+					return state.count;
+				},
+
+				addCount:state => n =>{
+					return state.count + n;
+				}
+			},
+
+			mutations:{
+				increment(state ,payload){
+					state.count ++;
+				},
+
+				[ADD](state,obj){
+					state.count += obj.n;
+				},
+				myAddAction(state ,obj){
+					state.count += obj.n;
+				},
+			},
+
+			actions:{
+				myAddAction({commit} ,obj){
+					commit(obj);
+				}
+			}
+
+		})
+
+		Vue.component('CountView',{
+			template:'<div>\
+			<slot name=title>\
+				<h1>默认标题</h1>	\
+			</slot>\
+			<input type="text" name="text" v-model="count">\
+			<button @click="addAction">add</button>\
+			</div>',
+			data:function(){
+				return {
+					count:'',
+				}
+			},
+			methods:{
+				...Vuex.mapMutations([ADD]),
+				addAction:function(){
+					this.ADD({
+						n:Number(this.count),
+					});
+					this.count=0;
+				}
+			}
+
+		})
+
+		var app = new Vue({
+			el:"#app",
+			store,
+			computed:Vuex.mapGetters(['count','addCount']),
+			data:{
+
+			},
+			methods:{
+				myAddAction:function(){
+					...Vuex.mapActions(['myAddAction']),
+					console.log('aaa');
+					this.myAddAction({
+						n:15,
+					})
+					// this.$store.dispatch({
+					// 	type:"myAddAction",
+					// 	n:10,
+					// })
+				}
+			},
+		})
+		
+	</script>
+
+</body>
+</html>

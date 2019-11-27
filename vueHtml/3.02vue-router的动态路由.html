@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>vue-router的动态路由</title>
+	<meta charset="utf-8">
+	<script type="text/javascript" src="./vue.js"></script>
+	<script type="text/javascript" src="./vue-router.js"></script>
+</head>
+<body>
+	<div id="app">
+		<router-link to="/">index</router-link>
+		<router-link to="/list">list</router-link>
+		<router-link to="/list/one">one</router-link>
+		<router-link to="/list/two">two</router-link>
+		<router-view></router-view>
+		
+	</div>
+
+	<script type="text/javascript">
+		var router = new VueRouter({
+			routes:[
+			{
+				path:"/",
+				component:{
+					template:"<div>首页</div>"
+				}
+			},
+			{
+				path:"/list",
+				component:{
+					template:"<div>列表</div>"
+				}
+			},
+			{
+				path:"/list/:item",
+				component:{
+					template:"<div>{{$route.params.item}}</div>"
+				}
+			}
+			]
+
+		})
+
+		var app = new Vue({
+			el:"#app",
+			router:router,
+			data:{
+
+			},
+			methods:{
+
+			},
+		})
+
+
+	</script>
+
+
+</body>
+</html>

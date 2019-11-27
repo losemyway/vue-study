@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>vuex之mutations</title>
+	<meta charset="utf-8">
+	<script type="text/javascript" src="./vue.js"></script>
+	<script type="text/javascript" src="./vuex.js"></script>
+</head>
+<body>
+	<div id="app">
+		<count-view>
+			<div slot=title>
+				<h2>count</h2>
+				<p>{{this.$store.state.count}}</p>
+				<h2>myNumber</h2>
+				<p>{{this.$store.state.myNumber}}</p>
+			</div> 
+		</count-view>
+	</div>
+
+	<script type="text/javascript">
+		var ADD = 'ADD';
+		var store = new Vuex.Store({
+			state:{
+				count:0,
+				myNumber:0,
+			},
+			mutations:{
+				increment(state ,payload){
+					state.count += payload.n;
+				},
+				[ADD](state,pay){
+					state.count += pay.n;
+					state.myNumber = pay.m;
+				}
+			}
+		})
+
+		store.commit({
+			type:'increment',
+			n:10,
+		})
+
+		store.commit({
+			type:ADD,
+			n:17,
+			m:2
+		})
+
+		console.log(store.state.count);
+
+		Vue.component('CountView',{
+			template:'<div>\
+			<slot name=title>\
+			<h1>默认内容</h1>\
+			</slot>\
+			<input type="text" name="text" v-model="count">\
+			<button @click="add()">add</button>\
+			</div>',
+			data:function(){
+				return{
+					count:0,
+				}
+			},
+			methods:{
+				...Vuex.mapMutations([ADD]),
+				add:function(){
+					var number = Number(this.count);
+					this.ADD({
+						n:Number(this.count),
+						m:number+1,
+					})
+				}
+			},
+		})
+
+		var app = new Vue({
+			el:"#app",
+			store,
+
+		})
+
+	</script>
+
+</body>
+</html>

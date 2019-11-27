@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>vue-router的基本使用</title>
+	<meta charset="utf-8">
+	<script type="text/javascript" src="./vue.js"></script>
+	<script type="text/javascript" src="./vue-router.js"></script>
+</head>
+<body>
+	<div id="app">
+		<router-link to="/">one</router-link>
+		<router-link to="/two">two</router-link>
+		<router-link to="/three">three</router-link>
+		<router-view></router-view>
+		
+	</div>
+
+	<script type="text/javascript">
+		var router = new VueRouter({
+			routes:[{
+				path:'/',
+				component:{
+					template:'<div>首页</div>'
+				}
+			},
+			{
+				path:'/two',
+				component:{
+					template:'<div>第二页</div>'
+				}
+			},
+			{
+				path:'/three',
+				component:{
+					template:'<div>第三页</div>'
+				}
+			},
+			]
+		})
+		
+		var app = new Vue({
+			el:"#app",
+			router:router,
+			data:{
+
+			},
+			methods:{
+
+			},
+		})
+
+	</script>
+
+</body>
+</html>

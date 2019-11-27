@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>vuex之state</title>
+	<meta charset="utf-8">
+	<script type="text/javascript" src="vue.js"></script>
+	<script type="text/javascript" src="vuex.js"></script>
+</head>
+<body>
+
+	<div id="app">
+		
+		<div>{{this.$store.state.count}}</div>
+		<p>子组件</p>
+		<child></child>
+	</div>
+
+	<script type="text/javascript">
+
+		
+		var store = new Vuex.Store({
+			state:{
+				count:0,
+			},
+			mutations:{
+				increment(state){
+					state.count++;
+				},
+				myCounAdd(state){
+					state.count++;
+				}
+			}
+		})
+		store.commit("increment");
+		store.commit("myCounAdd");
+		store.commit("myCounAdd");
+
+		Vue.component("Child",{
+			template:'<div><div>{{count}}</div></div>',
+			computed:Vuex.mapState(['count']),
+			data:function(){
+				return{
+					msg:"hhhh"
+				}
+			}
+			
+		})
+
+		var app = new Vue({
+			el:"#app",
+			store,
+		})
+
+	</script>
+
+</body>
+</html>

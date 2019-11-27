@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>vuex之getter</title>
+	<meta charset="utf-8">
+	<script type="text/javascript" src="./vue.js"></script>
+	<script type="text/javascript" src="./vuex.js"></script>
+</head>
+<body>
+	<div id="app">
+		{{this.$store.state.count}}
+		{{this.$store.getters.count}}
+		{{count}}
+		<button @click="btnAction()">add</button>
+	</div>
+
+	<script type="text/javascript">
+		
+		var store = new Vuex.Store({
+			state:{
+				count:0,
+			},
+			getters:{
+				count:state => {
+					return state.count;
+				}
+			}
+
+		})
+
+		var app = new Vue({
+			el:"#app",
+			store,
+			computed:Vuex.mapGetters(['count']),
+			data:{
+
+			},
+			methods:{
+				btnAction:function(){
+					count++;
+				}
+			},
+		})
+
+
+	</script>
+
+</body>
+</html>

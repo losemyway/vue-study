@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>vue-router命名路由&试图</title>
+	<meta charset="utf-8">
+	<script type="text/javascript" src="./vue.js"></script>
+	<script type="text/javascript" src="./vue-router.js"></script>
+</head>
+<body>
+
+	<div id="app">
+		<router-link :to="{name:'index'}">index</router-link>
+		<router-link :to="{name:'list'}">list</router-link>
+		<router-view name="name"></router-view>
+		<router-view name="list1"></router-view>
+
+		
+	</div>
+
+	<script type="text/javascript">
+		var router = new VueRouter({
+			routes:[
+				{
+					path:"/",
+					name:"index",
+					components:{
+						name:{
+							template:'<div>首页</div>'
+						}
+					}
+				},
+				{
+					path:"/list",
+					name:"list",
+					components:{
+						list1:{
+							template:'<div>列表1</div>'
+						},
+						list2:{
+							template:'<div>列表1</div>'
+						},
+					}
+				},
+			]
+
+		})
+
+		var app = new Vue({
+			el:"#app",
+			router:router,
+			data:{
+
+			},
+			methods:{
+
+			},
+
+		})
+
+
+	</script>
+
+</body>
+</html>
